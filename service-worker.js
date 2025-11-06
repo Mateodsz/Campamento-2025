@@ -1,12 +1,14 @@
-const CACHE_NAME = "campamento-cache-v7"; // cambia versión para forzar actualización
+const CACHE_NAME = "campamento-cache-v8"; // nueva versión para forzar actualización
 
+// Archivos a cachear
 const urlsToCache = [
-  "index.html",
-  "img/logo vencedores.png", // usa el mismo nombre exacto que en tu carpeta
-  "manifest.json",
-  "icon.png",
-  "style.css",
-  "programación.html"
+  "./", // importante para GitHub Pages
+  "./index.html",
+  "./programación.html",
+  "./manifest.json",
+  "./style.css",
+  "./img/logo vencedores.png",
+  "./icon.png"
 ];
 
 // INSTALACIÓN
@@ -14,7 +16,7 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log("📦 Archivos cacheados");
+        console.log("📦 Archivos cacheados correctamente");
         return cache.addAll(urlsToCache);
       })
       .catch((err) => console.error("❌ Error al cachear archivos:", err))
@@ -27,41 +29,38 @@ self.addEventListener("install", (event) => {
 // ACTIVACIÓN
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
+    caches.keys().then((cacheNames) =>
+      Promise.all(
         cacheNames.map((cache) => {
           if (cache !== CACHE_NAME) {
             console.log("🗑️ Eliminando caché vieja:", cache);
             return caches.delete(cache);
           }
         })
-      );
-    })
+      )
+    )
   );
-  self.clients.claim(); // asegura que las páginas usen el nuevo SW de inmediato
+  self.clients.claim();
 });
 
-// FETCH (carga desde cache o red)
+// FETCH
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        // Si la petición se hace correctamente, devuelve la respuesta de la red
-        return response;
-      })
-      .catch(() => {
-        // Si falla la red, busca en cache
-        return caches.match(event.request)
-          .then(cached => {
-            // Si existe en cache, lo uso
-            if (cached) return cached;
+    caches.match(event.request).then((cachedResponse) => {
+      // ✅ 1. Si hay respuesta en caché, úsala (ideal para recargas offline)
+      if (cachedResponse) {
+        return cachedResponse;
+      }
 
-            // Si la solicitud es una navegación (recarga), uso el index offline
-            if (event.request.mode === "navigate") {
-              return caches.match("./index.html");
-            }
-          });
-      })
+      // ✅ 2. Si no hay en caché, intenta traerlo de la red
+      return fetch(event.request).catch(() => {
+        // ✅ 3. Si falla y es una navegación (recarga sin internet),
+        // devuelve el index.html desde caché
+        if (event.request.mode === "navigate") {
+          return caches.match("./index.html");
+        }
+      });
+    })
   );
 });
 
