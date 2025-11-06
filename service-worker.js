@@ -1,13 +1,12 @@
-const CACHE_NAME = "campamento-cache-v7"; // nueva versión para limpiar caché anterior
+const CACHE_NAME = "campamento-cache-v7"; // cambia versión para forzar actualización
 
 const urlsToCache = [
-  "./", // importante para GitHub Pages
-  "./index.html",
-  "./programación.html",
-  "./manifest.json",
-  "./style.css",
-  "./img/logo vencedores.png", // usa el mismo nombre exacto que en tu carpeta
-  "./icon.png"
+  "index.html",
+  "img/logo vencedores.png", // usa el mismo nombre exacto que en tu carpeta
+  "manifest.json",
+  "icon.png",
+  "style.css",
+  "programación.html"
 ];
 
 // INSTALACIÓN
@@ -42,7 +41,7 @@ self.addEventListener("activate", (event) => {
   self.clients.claim(); // asegura que las páginas usen el nuevo SW de inmediato
 });
 
-// FETCH (carga desde cache o red + recarga offline)
+// FETCH (carga desde cache o red)
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     fetch(event.request)
@@ -51,20 +50,18 @@ self.addEventListener("fetch", (event) => {
         return response;
       })
       .catch(() => {
-        // Si falla (por ejemplo, sin internet), intenta servir desde caché
+        // Si falla la red, busca en cache
         return caches.match(event.request)
-          .then((cachedResponse) => {
-            if (cachedResponse) {
-              return cachedResponse; // usa la versión cacheada si existe
-            }
+          .then(cached => {
+            // Si existe en cache, lo uso
+            if (cached) return cached;
 
-            // 👇 Esta parte es NUEVA:
-            // Si la solicitud es una navegación (recarga) y no hay conexión,
-            // devuelve el index.html desde caché para mantener la app funcionando
+            // Si la solicitud es una navegación (recarga), uso el index offline
             if (event.request.mode === "navigate") {
               return caches.match("./index.html");
             }
           });
       })
   );
-})
+});
+
