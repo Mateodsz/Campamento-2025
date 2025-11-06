@@ -1,4 +1,4 @@
-const CACHE_NAME = "campamento-cache-v1";
+const CACHE_NAME = "campamento-cache-v2";
 const urlsToCache = [
   "index.html",
   "img/logo vencedores.png"
