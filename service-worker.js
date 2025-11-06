@@ -1,6 +1,6 @@
 const CACHE_NAME = "campamento-cache-v1";
 const urlsToCache = [
-  "index.html",
+  "programa.html",
   "img/logo vencedores.png"
 ];
 
