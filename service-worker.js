@@ -43,23 +43,24 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
-// FETCH
+// FETCH (maneja recargas sin conexión)
 self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      // ✅ 1. Si hay respuesta en caché, úsala (ideal para recargas offline)
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-
-      // ✅ 2. Si no hay en caché, intenta traerlo de la red
-      return fetch(event.request).catch(() => {
-        // ✅ 3. Si falla y es una navegación (recarga sin internet),
-        // devuelve el index.html desde caché
-        if (event.request.mode === "navigate") {
+  // Solo interceptamos peticiones de navegación (recargar, abrir nueva página, etc.)
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request)
+        .catch(() => {
+          // Si falla la red, devolvemos el index.html guardado
           return caches.match("./index.html");
-        }
-      });
+        })
+    );
+    return; // salimos para no interferir con otros recursos
+  }
+
+  // Para imágenes, css, js, etc. usamos cache first
+  event.respondWith(
+    caches.match(event.request).then((cached) => {
+      return cached || fetch(event.request);
     })
   );
 });
