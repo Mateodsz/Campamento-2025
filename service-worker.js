@@ -1,15 +1,44 @@
-const CACHE_NAME = "campamento-cache-v2";
+const CACHE_NAME = "campamento-cache-v3"; // cambia versión para forzar actualización
+
 const urlsToCache = [
   "index.html",
-  "img/logo vencedores.png"
+  "img/icon.png", // usa el mismo nombre exacto que en tu carpeta
+  "manifest.json"
 ];
 
+// INSTALACIÓN
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
+    caches.open(CACHE_NAME)
+      .then((cache) => {
+        console.log("📦 Archivos cacheados");
+        return cache.addAll(urlsToCache);
+      })
+      .catch((err) => console.error("❌ Error al cachear archivos:", err))
   );
+
+  // activa inmediatamente la nueva versión
+  self.skipWaiting();
 });
 
+// ACTIVACIÓN
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cache) => {
+          if (cache !== CACHE_NAME) {
+            console.log("🗑️ Eliminando caché vieja:", cache);
+            return caches.delete(cache);
+          }
+        })
+      );
+    })
+  );
+  self.clients.claim(); // asegura que las páginas usen el nuevo SW de inmediato
+});
+
+// FETCH (carga desde cache o red)
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
@@ -17,22 +46,3 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
-
-self.addEventListener("install", (event) => {
-  self.skipWaiting(); // activa la nueva versión inmediatamente
-});
-
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== CACHE_NAME) {
-            return caches.delete(cache); // borra cachés viejas
-          }
-        })
-      )
-    )
-  );
-});
-
