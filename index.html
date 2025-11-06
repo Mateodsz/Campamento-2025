@@ -10,6 +10,22 @@
 
 </head>
 <body>
+
+<div id="countdown" style="
+  text-align:center;
+  font-size:1.5rem;
+  color:#fff;
+  background:#441a44;
+  padding:20px;
+  border-radius:15px;
+  width:80%;
+  margin:20px auto;
+  box-shadow:0 4px 15px rgba(0,0,0,0.3);
+">
+  ⏳ Cargando cuenta regresiva...
+</div>
+
+
   <header>
     <img src="img/logo vencedores.png" alt="Campamento Juvenil Vencedores" class="logo">
     <h1>Campamento Juvenil</h1>
@@ -184,5 +200,37 @@ He vencido ansiedad <br>
     });
   });
 </script>
+
+<script>
+  // Fecha del evento (ajusta según tu caso)
+  const eventDate = new Date("2025-12-15T08:00:00").getTime();
+
+  const countdownEl = document.getElementById("countdown");
+
+  const timer = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = eventDate - now;
+
+    if (distance < 0) {
+      clearInterval(timer);
+      countdownEl.innerHTML = "🎉 ¡El campamento ha comenzado!";
+      return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    countdownEl.innerHTML = `
+      🏕️ Faltan <strong>${days}</strong> días,
+      <strong>${hours}</strong> h,
+      <strong>${minutes}</strong> m,
+      <strong>${seconds}</strong> s
+      para el Campamento 2025!
+    `;
+  }, 1000);
+</script>
+
 </body>
 </html>
