@@ -2,8 +2,11 @@ const CACHE_NAME = "campamento-cache-v6"; // cambia versión para forzar actuali
 
 const urlsToCache = [
   "index.html",
-  "img/logo-vencedores.png", // usa el mismo nombre exacto que en tu carpeta
-  "manifest.json"
+  "img/logo vencedores.png", // usa el mismo nombre exacto que en tu carpeta
+  "manifest.json",
+  "icon.png",
+  "style.css",
+  "programación.html"
 ];
 
 // INSTALACIÓN

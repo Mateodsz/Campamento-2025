@@ -1,15 +1,22 @@
 {
   "name": "Campamento Juvenil 2025",
   "short_name": "Vencedores 2025",
-  "start_url": "index.html",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#a01d2b",
   "theme_color": "#441a44",
   "icons": [
-        {
+    {
       "src": "img/icon.png",
       "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "img/icon.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
 }
+
