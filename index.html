@@ -85,13 +85,36 @@ He vencido ansiedad <br>
     Campamento Juvenil Vencedores © 2025 — Unidos para vencer 💪🔥
   </footer>
 
-  <script>
+ <script>
   if ('serviceWorker' in navigator) {
+    // Registrar el service worker
     navigator.serviceWorker.register('service-worker.js')
-      .then(() => console.log('✅ Service Worker registrado correctamente'))
-      .catch(error => console.log('❌ Error al registrar el Service Worker:', error));
+      .then((registration) => {
+        console.log('✅ Service Worker registrado con éxito:', registration.scope);
+
+        // Detectar si hay una nueva versión disponible
+        registration.onupdatefound = () => {
+          const newWorker = registration.installing;
+          newWorker.onstatechange = () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              console.log('⚡ Nueva versión disponible. Recarga para actualizar.');
+              // Aquí podrías mostrar un mensaje al usuario si quieres
+            }
+          };
+        };
+      })
+      .catch((error) => {
+        console.log('❌ Error al registrar el Service Worker:', error);
+      });
+
+    // Escuchar cuando se active una nueva versión del SW
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      console.log('🔄 Nueva versión activa, recargando...');
+      window.location.reload();
+    });
   }
 </script>
+
 
 </body>
 </html>

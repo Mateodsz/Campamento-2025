@@ -1,8 +1,8 @@
-const CACHE_NAME = "campamento-cache-v3"; // cambia versión para forzar actualización
+const CACHE_NAME = "campamento-cache-v4"; // cambia versión para forzar actualización
 
 const urlsToCache = [
   "index.html",
-  "img/icon.png", // usa el mismo nombre exacto que en tu carpeta
+  "img/logo-vencedores.png", // usa el mismo nombre exacto que en tu carpeta
   "manifest.json"
 ];
 
@@ -46,3 +46,4 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+
