@@ -18,13 +18,25 @@
 
   <section>
     <div class="programa">
-      <h3>Programa del Día</h3>
+      <h2>Programación</h2>
+      <h3>Sábado</h3>
       <ul>
-        <li>🕗 8:00 a.m. - Devocional de cerrado</li>
-        <li>🏕️ 10:00 a.m. - Actividades por equipos</li>
-        <li>🍽️ 12:30 p.m. - Almuerzo</li>
-        <li>🎶 3:00 p.m. - Ensayo general / dinámicas</li>
-        <li>🔥 7:00 p.m. - Fogata y noche de adoración</li>
+        <li>🎶 9:00 a.m. - Primera sesión</li>
+        <li>🙌 3:30 p.m. - Actividad espiritual</li>
+        <li>🔥 7:00 p.m. - Segunda sesión</li>
+      </ul>
+
+      <h3>Domingo</h3>
+      <ul>
+        <li>🎶 9:00 a.m. - Tercera sesión</li>
+        <li>⚽ 3:00 p.m. a 5:00 p.m. - Tarde social libre</li>
+        <li>🔥 7:00 p.m. - Cuarta Sesión sesión</li>
+      </ul>
+
+      <h3>Lunes</h3>
+      <ul>
+        <li>🎶 9:00 a.m. - Quinta sesión - Clausura</li>
+        <li>🚌 3:00 p.m. - Hora de salida de buses</li>
       </ul>
     </div>
 
@@ -78,8 +90,11 @@ He vencido maldición <br>
 He vencido ansiedad <br>
 </p>
   </div>
- 
+
+  
   </section>
+
+
  
 <section>
   <button id="instalarApp" style="display:none; padding: 10px 20px; border: none; border-radius: 10px; background-color: #441a44; color: white; font-size: 16px;">
@@ -145,47 +160,5 @@ He vencido ansiedad <br>
     });
   });
 </script>
-
-<script>
-  let deferredPrompt;
-  const installBtn = document.createElement("button");
-  installBtn.textContent = "📲 Instalar app";
-  installBtn.id = "instalarApp";
-  installBtn.style = `
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #441a44;
-    color: white;
-    border: none;
-    padding: 12px 18px;
-    border-radius: 10px;
-    font-size: 16px;
-    display: none;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  `;
-  document.body.appendChild(installBtn);
-
-  // Escucha el evento antes de mostrar el banner nativo
-  window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault(); // evita que aparezca el banner automático
-    deferredPrompt = e;
-    installBtn.style.display = "block"; // muestra el botón personalizado
-  });
-
-  installBtn.addEventListener("click", async () => {
-    installBtn.style.display = "none"; // oculta el botón
-    deferredPrompt.prompt(); // muestra el diálogo nativo
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === "accepted") {
-      console.log("✅ App instalada");
-    } else {
-      console.log("❌ Instalación cancelada");
-    }
-    deferredPrompt = null;
-  });
-</script>
-
-
 </body>
 </html>
