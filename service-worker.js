@@ -1,4 +1,4 @@
-const CACHE_NAME = "campamento-cache-v4"; // cambia versión para forzar actualización
+const CACHE_NAME = "campamento-cache-v5"; // cambia versión para forzar actualización
 
 const urlsToCache = [
   "index.html",
