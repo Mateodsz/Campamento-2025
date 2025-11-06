@@ -18,3 +18,21 @@ self.addEventListener("fetch", (event) => {
   );
 });
 
+self.addEventListener("install", (event) => {
+  self.skipWaiting(); // activa la nueva versión inmediatamente
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) =>
+      Promise.all(
+        cacheNames.map((cache) => {
+          if (cache !== CACHE_NAME) {
+            return caches.delete(cache); // borra cachés viejas
+          }
+        })
+      )
+    )
+  );
+});
+
