@@ -18,21 +18,12 @@
     <h2>Vencedores 2025</h2>
   </header>
 
-  <div id="countdown" style="
-  text-align:center;
-  font-size:1.5rem;
-  color:#fff;
-  background:#441a44;
-  padding:20px;
-  border-radius:15px;
-  width:80%;
-  margin:20px auto;
-  box-shadow:0 4px 15px rgba(0,0,0,0.3);
-">
-  ⏳ Cargando cuenta regresiva...
-</div>
 
-  <section>
+<div id="contenidoCampamento" style="display:none;">
+  <!-- TODO TU CONTENIDO AQUÍ -->
+  <h1>🏕️ Bienvenidos</h1>
+  <p>Explora la programación, actividades y más.</p>
+   <section>
     <div class="programa">
       <h2>Programación</h2>
       <h3>Sábado</h3>
@@ -134,6 +125,10 @@ He vencido ansiedad <br>
   
   </section>
 
+</div>
+
+ <div id="countdownContainer"></div>
+
 
  
 <section>
@@ -202,35 +197,57 @@ He vencido ansiedad <br>
 </script>
 
 <script>
-  // Fecha del evento (ajusta según tu caso)
-  const eventDate = new Date("2025-11-14T08:00:00").getTime();
+  // 🔹 FECHA DEL EVENTO (ajústala según tu caso)
+  const eventDate = new Date("2025-11-06T16:36:00").getTime();
 
-  const countdownEl = document.getElementById("countdown");
+  const countdownContainer = document.getElementById("countdownContainer");
+  const contenido = document.getElementById("contenidoCampamento");
 
-  const timer = setInterval(() => {
+  function updateCountdown() {
     const now = new Date().getTime();
     const distance = eventDate - now;
 
-    if (distance < 0) {
-      clearInterval(timer);
-      countdownEl.innerHTML = "🎉 ¡El campamento ha comenzado!";
+    // Si ya es el evento o ha pasado
+    if (distance <= 0) {
+      countdownContainer.style.display = "none"; // ocultar el conteo
+      contenido.style.display = "block"; // mostrar el contenido real
       return;
     }
 
+    // Calcular tiempo restante
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    countdownEl.innerHTML = `
-      🏕️ Faltan <strong>${days}</strong> días,
-      <strong>${hours}</strong> h,
-      <strong>${minutes}</strong> m,
-      <strong>${seconds}</strong> s
-      para el Campamento 2025!
+    countdownContainer.innerHTML = `
+      <div style="
+        text-align:center;
+        color:#fff;
+        background:linear-gradient(135deg,#441a44,#a01d2b);
+        padding:40px 20px;
+        border-radius:20px;
+        width:85%;
+        margin:50px auto;
+        box-shadow:0 6px 20px rgba(0,0,0,0.3);
+        font-size:1.3rem;
+        font-family:'Poppins',sans-serif;
+      ">
+        <h2>🏕️ Campamento Juvenil 2025</h2>
+        <p>Comienza en:</p>
+        <h1 style="font-size:2rem; margin:10px 0;">
+          ${days}d ${hours}h ${minutes}m ${seconds}s
+        </h1>
+        <p>Prepárate para vivir una gran experiencia 🙌</p>
+      </div>
     `;
-  }, 1000);
+  }
+
+  // Actualizar cada segundo
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
 </script>
+
 
 </body>
 </html>
