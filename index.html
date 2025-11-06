@@ -80,7 +80,11 @@ He vencido ansiedad <br>
 </p>
   </div>
   </section>
-
+<section>
+  <button id="instalarApp" style="display:none; padding: 10px 20px; border: none; border-radius: 10px; background-color: #441a44; color: white; font-size: 16px;">
+  📱 Instalar aplicación
+</button>
+</section>
   <footer>
     Campamento Juvenil Vencedores © 2025 — Unidos para vencer 💪🔥
   </footer>
@@ -113,6 +117,32 @@ He vencido ansiedad <br>
       window.location.reload();
     });
   }
+</script>
+
+<script>
+  let deferredPrompt;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+
+    // Mostrar el botón cuando la PWA sea instalable
+    const installBtn = document.getElementById('instalarApp');
+    installBtn.style.display = 'block';
+
+    installBtn.addEventListener('click', () => {
+      installBtn.style.display = 'none';
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('✅ App instalada');
+        } else {
+          console.log('❌ Instalación cancelada');
+        }
+        deferredPrompt = null;
+      });
+    });
+  });
 </script>
 
 
