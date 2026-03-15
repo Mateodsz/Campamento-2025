@@ -3,13 +3,16 @@
 body {
   margin: 0;
   font-family: 'Montserrat', sans-serif;
+  color: white;
+  text-align: center;
 
-  background: 
-linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
-url("img/campamento.png");
-background-size: cover;
-background-position: center;
-background-attachment: fixed;
+  background:
+  linear-gradient(rgba(15,32,39,0.75), rgba(44,83,100,0.75)),
+  url("img/campamento.png");
+
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
 }
 
 /* Encabezado */
