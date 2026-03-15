@@ -1,82 +1,157 @@
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
 
-body {
-  margin: 0;
-  font-family: 'Montserrat', sans-serif;
-  color: white;
-  text-align: center;
+/* VARIABLES DE COLOR */
+:root{
+  --color-noche:#0f2027;
+  --color-bosque:#203a43;
+  --color-cielo:#2c5364;
+  --color-fogata:#ffd27a;
+  --color-fogata-soft:#ffe3a6;
+  --color-glass:rgba(0,0,0,0.45);
+}
+
+/* RESET */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+/* BODY */
+body{
+  font-family:'Montserrat',sans-serif;
+  color:white;
+  text-align:center;
+  line-height:1.6;
 
   background:
   linear-gradient(rgba(15,32,39,0.75), rgba(44,83,100,0.75)),
   url("img/campamento.png");
 
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
 }
 
-/* Encabezado */
-header {
-  background: rgba(0, 0, 0, 0.55);
-  padding: 1.5rem;
-  backdrop-filter: blur(5px);
+/* HEADER */
+header{
+  background:rgba(0,0,0,0.55);
+  backdrop-filter:blur(8px);
+  padding:2rem;
+  border-bottom:1px solid rgba(255,255,255,0.1);
 }
 
-h1 {
-  font-size: 2.2rem;
-  margin: 0.5rem 0;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+header h1{
+  font-size:2.5rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
 }
 
-h2 {
-  font-size: 1.3rem;
-  margin-top: 1rem;
-  text-transform: uppercase;
-  color: #ffd27a; /* luz de fogata */
+header h2{
+  margin-top:10px;
+  font-size:1.2rem;
+  color:var(--color-fogata);
 }
 
-section {
-  padding: 1rem 2rem;
+/* LOGO */
+img.logo{
+  width:300px;
+  margin-top:15px;
 }
 
-/* Tarjetas del programa */
-.programa {
-  background: rgba(0, 0, 0, 0.45);
-  border-radius: 12px;
-  max-width: 600px;
-  margin: 1rem auto;
-  padding: 1rem;
-  text-align: left;
-  backdrop-filter: blur(6px);
+/* SECCIONES */
+section{
+  padding:2rem;
+  max-width:1100px;
+  margin:auto;
 }
 
-.programa h3 {
-  color: #ffe3a6;
-  border-bottom: 2px solid #ffd27a;
-  padding-bottom: 0.3rem;
+/* TARJETAS PROGRAMA */
+.programa{
+  background:var(--color-glass);
+  backdrop-filter:blur(8px);
+  border-radius:16px;
+  padding:1.5rem;
+  margin:1.5rem auto;
+  max-width:650px;
+  text-align:left;
+
+  border:1px solid rgba(255,255,255,0.1);
+  box-shadow:0 15px 35px rgba(0,0,0,0.5);
+
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.programa ul {
-  list-style: none;
-  padding: 0;
+.programa:hover{
+  transform:translateY(-6px);
+  box-shadow:0 20px 45px rgba(0,0,0,0.6);
 }
 
-.programa li {
-  margin: 0.5rem 0;
+/* TITULO DE CADA DIA */
+.programa h3{
+  color:var(--color-fogata-soft);
+  border-bottom:2px solid var(--color-fogata);
+  padding-bottom:5px;
+  margin-bottom:10px;
 }
 
-/* Footer */
-footer {
-  margin-top: 2rem;
-  padding: 1rem;
-  background: rgba(0, 0, 0, 0.5);
-  font-size: 0.9rem;
-  color: #ffd27a;
+/* LISTA */
+.programa ul{
+  list-style:none;
 }
 
-/* Logo */
-img.logo {
-  width: 300px;
-  margin-top: 1rem;
+.programa li{
+  padding:6px 0;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.programa li:last-child{
+  border-bottom:none;
+}
+
+/* FOOTER */
+footer{
+  margin-top:3rem;
+  padding:1.5rem;
+  background:rgba(0,0,0,0.6);
+  border-top:1px solid rgba(255,255,255,0.1);
+  font-size:0.9rem;
+  color:var(--color-fogata);
+}
+
+/* ANIMACION SUAVE */
+@keyframes aparecer{
+  from{
+    opacity:0;
+    transform:translateY(20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+.programa{
+  animation:aparecer 0.8s ease;
+}
+
+/* RESPONSIVE */
+@media (max-width:768px){
+
+  header h1{
+    font-size:2rem;
+  }
+
+  img.logo{
+    width:220px;
+  }
+
+  section{
+    padding:1.5rem;
+  }
+
+  .programa{
+    padding:1.2rem;
+  }
+
 }
