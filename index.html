@@ -254,7 +254,7 @@ He vencido ansiedad <br>
           ${days}d ${hours}h ${minutes}m ${seconds}s
         </h1>
         <p>Prepárate para vivir una gran experiencia 🙌</p>
-        <h1>13 al 16 de DICIEMBRE</h1>
+        <h1>13 al 16 de NOVIEMBRE</h1>
       </div>
     `;
   }
@@ -264,6 +264,63 @@ He vencido ansiedad <br>
   setInterval(updateCountdown, 1000);
 </script>
 
+</script>
+
+<script>
+  // 🔹 FECHA DEL EVENTO (ajústala según tu caso)
+  const eventDate = new Date("2026-09-15T00:00:00").getTime();
+
+  const countdownContainer = document.getElementById("countdownContainer");
+  const contenido = document.getElementById("contenidoCampamento");
+
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = eventDate - now;
+
+    // Si ya es el evento o ha pasado
+    if (distance <= 0) {
+      countdownContainer.style.display = "none"; // ocultar el conteo
+      contenido.style.display = "block"; // mostrar el contenido real
+      return;
+    }
+
+    // Calcular tiempo restante
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    countdownContainer.innerHTML = `
+      <div style="
+        text-align:center;
+        color:#fff;
+        background:linear-gradient(135deg, rgba(15,32,39,0.9), rgba(44,83,100,0.9));
+        padding:40px 20px;
+        border-radius:20px;
+        width:85%;
+        margin:50px auto;
+        box-shadow:0 10px 30px rgba(0,0,0,0.5);
+        font-size:1.3rem;
+        font-family:'Poppins',sans-serif;
+        border:1px solid rgba(255,210,122,0.4);
+        backdrop-filter: blur(6px);
+">
+      
+        <h2>🏕️ Cierre de inscripciones</h2>
+        <p>Comienza en:</p>
+        <h1 style="font-size:2rem; margin:10px 0;">
+          ${days}d ${hours}h ${minutes}m ${seconds}s
+        </h1>
+        <p>Prepárate para vivir una gran experiencia 🙌</p>
+        <h1>15 de SEPEMBRE</h1>
+      </div>
+    `;
+  }
+
+  // Actualizar cada segundo
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
 
 </body>
 </html>
