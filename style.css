@@ -9,7 +9,7 @@ body {
 
   background: 
 linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
-url("campamento.png");
+url("img/campamento.png");
 background-size: cover;
 background-position: center;
 background-attachment: fixed;
